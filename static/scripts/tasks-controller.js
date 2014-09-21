@@ -1,9 +1,17 @@
 
 tasksController = function() {
+	function errorLogger(errorCode, errorMessage){
+		console.log(errorCode+' '+ errorMessage)
+	};
 	var taskPage;
 	var initialised = false;
 	return {
 		init: function(page){
+			storageEngine.init(function(){
+				storageEngine.initObjectStore('task',function(){
+					
+				},errorLogger)
+			},errorLogger);
 			if(!initialised){
 				taskPage = page;
 				$(taskPage).find('[required="required"]').prev('label').append('<span>*</span>').children('span').addClass('required');
@@ -24,8 +32,11 @@ tasksController = function() {
 				$(taskPage).find('#saveTask').click(function(evt){
 					evt.preventDefault();
 					if($(taskPage).find('form').valid()){
-					var task = $('form').toObject();
-					$('#taskRow').tmpl(task).appendTo($('#tblTasks tbody'));
+						var task = $('form').toObject();
+						storageEngine.save('task',task,
+						function(savedTask){
+							$('#taskRow').tmpl(savedTask).appendTo($(taskPage).find('#tblTasks tbody'));
+						},errorLogger);
 					}
 				});
 				initialised = true;
