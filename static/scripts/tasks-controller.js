@@ -25,9 +25,12 @@ tasksController = function() {
 					console.log("Hightlight")
 					$(evt.target).closest('td').siblings().andSelf().toggleClass('rowHightlight');
 				});
-				$(taskPage).find('#tblTasks tbody').on('click','.deleteRow', function(evt){
-					evt.preventDefault();
-					$(evt.target).parents('tr').remove();
+				$(taskPage).find('#tblTasks tbody').on('click','.deleteRow', 
+				function(evt){
+					storageEngine.delete('task',$(evt.target).data().taskId, 
+					function(){
+						$(evt.target).parents('tr').remove();
+					},errorLogger);
 				});
 				$(taskPage).find('#saveTask').click(function(evt){
 					evt.preventDefault();
@@ -42,6 +45,13 @@ tasksController = function() {
 				initialised = true;
 			}
 		}
+		// loadTasks: function() {
+			// storageEngine.findAll('task',function(tasks){
+				// $.each(tasks, function(index,task){
+					// $('#taskRow').tmpl(task).appendTo($(taskPage).find('#tblTasks tbody'));
+				// });
+			// },errorLogger);
+		// }		
 	}
 }();
 

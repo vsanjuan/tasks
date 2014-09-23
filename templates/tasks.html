@@ -67,6 +67,7 @@
 	<script>
 		$(document).ready(function(){
 			tasksController.init($('#taskPage'));
+			tasksController.loadTasks();
 		});
 	</script>
 	<script id="taskRow" type="text/x-jQuery-tmpl">
@@ -78,7 +79,7 @@
 			<nav>
 				<a href="#">Edit</a>
 				<a href="#">Complete</a>
-				<a href="#" class="deleteRow">Delete</a>
+				<a href="#" class="deleteRow" data-task-id="{id}">Delete</a>
 			</nav>
 			</td>
 		</tr>
