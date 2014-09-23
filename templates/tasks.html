@@ -9,7 +9,8 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
 	<script src="../static/scripts/jquery-serialization.js"></script>
 	<script src="../static/scripts/tasks-controller.js"></script>
-	<script src="../static/scripts/tasks-webstorage.js"></script>
+<!-- 	<script src="../static/scripts/tasks-webstorage.js"></script> -->
+	<script src="../static/scripts/tasks-indexeddb.js"></script>
 	</head>
 	<body>
 	<header>
@@ -18,6 +19,7 @@
 	<main id="taskPage">
 		<section id="taskCreation" class="not">
 			<form id="taskForm">
+				<input type="hidden" name="id"/>
 				<div>
 					<label>Task</label><input type="text" required="required" maxlength="200"
 					name="task" class="large" placeholder="Breakfast as Tiffany's"/>
@@ -66,9 +68,10 @@
 	</body>
 	<script>
 		$(document).ready(function(){
-			tasksController.init($('#taskPage'));
-			tasksController.loadTasks();
-		});
+			tasksController.init($('#taskPage'), function() {
+				tasksController.loadTasks();
+			});
+		})
 	</script>
 	<script id="taskRow" type="text/x-jQuery-tmpl">
 		<tr>
@@ -77,9 +80,9 @@
 			<td>${category}</td>
 			<td>
 			<nav>
-				<a href="#">Edit</a>
+				<a href="#" class="editRow" data-task-id="${id}">Edit</a>
 				<a href="#">Complete</a>
-				<a href="#" class="deleteRow" data-task-id="{id}">Delete</a>
+				<a href="#" class="deleteRow" data-task-id="${id}">Delete</a>
 			</nav>
 			</td>
 		</tr>
