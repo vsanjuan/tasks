@@ -10,7 +10,7 @@
 	<script src="../static/scripts/jquery-serialization.js"></script>
 	<script src="../static/scripts/tasks-controller.js"></script>
 <!-- 	<script src="../static/scripts/tasks-webstorage.js"></script> -->
-	<script src="../static/scripts/tasks-indexeddb.js"></script>
+ 	<script src="../static/scripts/tasks-indexeddb.js"></script>
 	</head>
 	<body>
 	<header>
@@ -71,7 +71,7 @@
 			tasksController.init($('#taskPage'), function() {
 				tasksController.loadTasks();
 			});
-		})
+		});
 	</script>
 	<script id="taskRow" type="text/x-jQuery-tmpl">
 		<tr>

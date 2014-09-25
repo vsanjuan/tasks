@@ -22,7 +22,6 @@ tasksController = function() {
 				$(taskPage).find('tbody tr:even').addClass('even');
 				$(taskPage).find('#btnAddTask').click(function(evt){
 					evt.preventDefault();
-					console.log('Add task')
 					$(taskPage).find('#taskCreation').removeClass('not');
 				});
 				$(taskPage).find('tbody tr').click(function(evt) {
@@ -46,8 +45,6 @@ tasksController = function() {
 							tasksController.loadTasks();
 							$(':input').val('');
 							$(taskPage).find('#taskCreation').addClass('not');
-						// function(savedTask){
-							// $('#taskRow').tmpl(savedTask).appendTo($(taskPage).find('#tblTasks tbody'));
 						},errorLogger);
 					}
 				});
