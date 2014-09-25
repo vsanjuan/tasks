@@ -9,6 +9,7 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
 	<script src="../static/scripts/jquery-serialization.js"></script>
 	<script src="../static/scripts/tasks-controller.js"></script>
+	<script src="../static/scripts/date.js"></script>
 <!-- 	<script src="../static/scripts/tasks-webstorage.js"></script> -->
  	<!-- <script src="../static/scripts/tasks-indexeddb.js"></script> -->
 	</head>
@@ -65,6 +66,7 @@
 			</nav>
 		</section>
 	</main>
+	<footer>You have <span id="taskCount"></span> tasks</footer>
 	</body>
 	<script>
 
@@ -97,13 +99,19 @@
 	</script>
 	<script id="taskRow" type="text/x-jQuery-tmpl">
 		<tr>
-			<td>${task}</td>
-			<td><time datetime="${requiredBy}">${requiredBy}</time></td>
-			<td>${category}</td>
+			{% raw %}
+			<td {{ if task == true }}class="taskCompleted"{{ /if }}>${task}</td>
+			{% endraw %}
+			<td {% if complete == true %}class="taskCompleted"{% endif %}>
+				<time datetime="${requiredBy}">${requiredBy}</time>
+			</td>
+			<td {% if complete == false %}class="taskCompleted"{% endif %}>${category}</td>
 			<td>
 			<nav>
+				{% if complete != true %}
 				<a href="#" class="editRow" data-task-id="${id}">Edit</a>
-				<a href="#">Complete</a>
+				<a href="#" class="completeRow" data-task-id="${id}">Complete</a>
+				{% endif %}
 				<a href="#" class="deleteRow" data-task-id="${id}">Delete</a>
 			</nav>
 			</td>
