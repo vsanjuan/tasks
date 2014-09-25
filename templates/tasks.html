@@ -10,7 +10,7 @@
 	<script src="../static/scripts/jquery-serialization.js"></script>
 	<script src="../static/scripts/tasks-controller.js"></script>
 <!-- 	<script src="../static/scripts/tasks-webstorage.js"></script> -->
- 	<script src="../static/scripts/tasks-indexeddb.js"></script>
+ 	<!-- <script src="../static/scripts/tasks-indexeddb.js"></script> -->
 	</head>
 	<body>
 	<header>
@@ -67,11 +67,33 @@
 	</main>
 	</body>
 	<script>
-		$(document).ready(function(){
+
+	function initScreen() {
+		$(document).ready(function() {
 			tasksController.init($('#taskPage'), function() {
 				tasksController.loadTasks();
-			});
+			});		
 		});
+	}
+	if (window.indexedDB) { 
+		$.getScript( "../static/scripts/tasks-indexeddb.js" )
+		.done(function( script, textStatus ) {
+			initScreen();
+		})
+		.fail(function( jqxhr, settings, exception ) {
+			console.log( 'Failed to load indexed db script' );
+		});
+	} else if (window.localStorage) {
+		$.getScript( "../static/scripts/tasks-webstorage.js" )
+		.done(function( script, textStatus ) {
+			initScreen();
+		})
+		.fail(function( jqxhr, settings, exception ) {
+			console.log( 'Failed to load web storage script' );
+		});
+	}	
+		
+			
 	</script>
 	<script id="taskRow" type="text/x-jQuery-tmpl">
 		<tr>
